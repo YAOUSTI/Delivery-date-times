@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/cities', 'CityController')->only(['index', 'show', 'store', 'update', 'destroy']);
 
 Route::post('/cities/{id}/delivery_times','CityController@delivery_times');
-Route::post('/cities/{id}/delivryDatesTimes','CityController@delivryDatesTimes');
+Route::post('/partners/{id}/delivery_times','PartnerController@attach_delivery_time');
 
 // i exclude create and edit methodes
-Route::resource('/deliveries', 'DeliveryController')->only('index', 'show', 'store', 'update', 'destroy');
+Route::resource('/delivery-times', 'DeliveryTimeController')->only('index', 'show', 'store', 'update', 'destroy');

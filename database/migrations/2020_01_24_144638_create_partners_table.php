@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveryTimesTable extends Migration
+class CreatePartnersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateDeliveryTimesTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_times', function (Blueprint $table) {
+        Schema::create('partners', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('delivery_at');
+            $table->string('name');
+            $table->bigInteger('city_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('city_id')
+            ->references('id')->on('cities')->onDelete('cascade');
         });
     }
 
@@ -27,6 +31,6 @@ class CreateDeliveryTimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_times');
+        Schema::dropIfExists('partners');
     }
 }

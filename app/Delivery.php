@@ -6,15 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Delivery extends Model
 {
-    protected $fillable = ['span', 'city_id'];
+    protected $fillable = ['delivery_at'];
+    protected $table = "delivery_times";
 
-    public function city()
+    public function partners()
     {
-        return $this->belongsTo(City::class);
-    }
-
-    public function delivery_times()
-    {
-        return $this->hasMany(Delivery_time::class);
+        return $this->belongsToMany(Partner::class, 'partner_delivery_time', 'delivery_time_id', 'partner_id');
     }
 }

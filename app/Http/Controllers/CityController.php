@@ -25,12 +25,11 @@ class CityController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
-            'partner_name' => 'required',
             'slug' => 'required'
         ]);
 
         $city = City::create($validate);
-        return response()->json(['message' => 'city was created successfully', 'delivery' => $city]);
+        return response()->json(['message' => 'city was created successfully', 'city' => $city]);
     }
 
 
