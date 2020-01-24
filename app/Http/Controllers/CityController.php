@@ -105,24 +105,22 @@ class CityController extends Controller
         $dt = $partner->delivery_times()->get();
         $excluded = ExcludedDeliveryDates::all();
 
-        $now = Carbon::now(); ;
+        $now = Carbon::now();;
 
         $dates = [];
 
         for ($c = 0; $c < 3; $c++) {
             $date = $now->addDays($c);
-            $todays_exclusions = $excluded->where('date',$date->format('Y-m-d'));
+            $todays_exclusions = $excluded->where('date', $date->format('Y-m-d'));
             $todays_dt = $dt;
             $part['date'] = $date->format('Y-m-d');
             $part['day_name'] = $date->format('l');
-            if(!empty($todays_exclusions))
-            {
+            if (!empty($todays_exclusions)) {
                 for ($i = 0; $i < count($todays_dt); $i++) {
-                        for ($j = 0; $j < count($todays_exclusions); $j++) {
-                            if($todays_dt[$i]->id==$todays_exclusions[$j]->delivery_time_id)
-                            {
-                                $todays_dt->forget($i);
-                            }
+                    for ($j = 0; $j < count($todays_exclusions); $j++) {
+                        if ($todays_dt[$i]->id == $todays_exclusions[$j]->delivery_time_id) {
+                            $todays_dt->forget($i);
+                        }
                     }
                 }
             }
