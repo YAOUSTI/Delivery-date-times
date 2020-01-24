@@ -17,7 +17,7 @@ class CreateDeliveryTimesTable extends Migration
             $table->bigIncrements('id');
             $table->string('delivery_at');
             $table->timestamps();
-            $table->integer('deliveries_id')->unsigned();
+            $table->bigInteger('deliveries_id')->unsigned();
 
             $table->foreign('deliveries_id')
                   ->references('id')->on('deliveries')
