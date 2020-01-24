@@ -75,7 +75,7 @@ class CityController extends Controller
 
         $day = date("l", strtotime($date[0]));
 
-        // $city->deliveries()->save($delivery_time);
+        $city->deliveries()->save($delivery_time);
         $city['delivery_time'] = $delivery_time;
         return response()->json(['day name' => $day, 'date' => $date[0], 'city' => $city]);
     }
