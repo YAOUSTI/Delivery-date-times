@@ -24,6 +24,7 @@ class DeliveryController extends Controller
     {
         $validate = $request->validate([
             'span' => 'required',
+            'city_id' => 'required'
         ]);
 
         $delivery = Delivery::create($validate);
@@ -35,6 +36,7 @@ class DeliveryController extends Controller
         $delivery = Delivery::findOrFail($id);
         $update = $request->validate([
             'span' => 'required',
+            'city_id' => 'required'
         ]);
 
         $delivery->update($update);

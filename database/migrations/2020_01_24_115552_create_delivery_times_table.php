@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveriesTable extends Migration
+class CreateDeliveryTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateDeliveriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliveries', function (Blueprint $table) {
+        Schema::create('delivery_times', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('span');
-            $table->bigInteger('city_id')->unsigned()->nullable();
+            $table->string('delivery_at');
             $table->timestamps();
+            $table->integer('deliveries_id')->unsigned();
 
-            $table->foreign('city_id')
-                ->references('id')->on('cities')
-                ->onDelete('cascade');
+            $table->foreign('deliveries_id')
+                  ->references('id')->on('deliveries')
+                  ->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateDeliveriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliveries');
+        Schema::dropIfExists('delivery_times');
     }
 }
