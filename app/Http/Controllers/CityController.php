@@ -6,6 +6,7 @@ use App\City;
 use App\Delivery;
 use App\ExcludedDeliveryDates;
 use App\Partner;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -98,10 +99,37 @@ class CityController extends Controller
         return $exclude;
     }
 
-    public function delivery_date_times(Request $request, $id, $number)
+    public function delivery_date_times(Request $request, $id)
     {
-        $city = City::findOrFail($id);
-        $partner=Partner::get();
-        
+        $partner = Partner::where('city_id', $id)->first();
+        $dt = $partner->delivery_times()->get();
+        $excluded = ExcludedDeliveryDates::all();
+
+        $now = Carbon::now(); ;
+
+        $dates = [];
+
+        for ($c = 0; $c < 3; $c++) {
+            $date = $now->addDays($c);
+            $todays_exclusions = $excluded->where('date',$date->format('Y-m-d'));
+            $todays_dt = $dt;
+            $part['date'] = $date->format('Y-m-d');
+            $part['day_name'] = $date->format('l');
+            if(!empty($todays_exclusions))
+            {
+                for ($i = 0; $i < count($todays_dt); $i++) {
+                        for ($j = 0; $j < count($todays_exclusions); $j++) {
+                            if($todays_dt[$i]->id==$todays_exclusions[$j]->delivery_time_id)
+                            {
+                                $todays_dt->forget($i);
+                            }
+                    }
+                }
+            }
+            $part['delivery_times'] = $todays_dt;
+
+            array_push($dates, $part);
+        }
+        return response()->json(['dates' => $dates]);
     }
 }
