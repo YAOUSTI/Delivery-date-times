@@ -15,7 +15,14 @@ class CreateExcludedDeliveryDatesTable extends Migration
     {
         Schema::create('excluded_delivery_dates', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date("date");
+            $table->bigInteger('city_id')->unsigned();
+            $table->bigInteger('delivery_time_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            $table->foreign('delivery_time_id')->references('id')->on('delivery_times')->onDelete('cascade');
+        
         });
     }
 

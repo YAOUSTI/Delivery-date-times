@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Delivery;
+use App\ExcludedDeliveryDates;
+use App\Partner;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -77,5 +79,29 @@ class CityController extends Controller
         $city->deliveries()->save($delivery_time);
         $city['delivery_time'] = $delivery_time;
         return response()->json(['day name' => $day, 'date' => $date[0], 'city' => $city]);
+    }
+
+
+    public function exclude_delivery_date(Request $request, $id)
+    {
+        $request->validate([
+            'delivery_time_id' => 'required|exists:delivery_times,id',
+            'date' => 'required|date',
+        ]);
+        $date = $request->date;
+
+        $city = City::findOrFail($id);
+        $delivery = Delivery::findOrFail($request->delivery_time_id);
+
+        $exclude = ExcludedDeliveryDates::create(['date' => $date, 'city_id' => $id, 'delivery_time_id' => $request->delivery_time_id]);
+
+        return $exclude;
+    }
+
+    public function delivery_date_times(Request $request, $id, $number)
+    {
+        $city = City::findOrFail($id);
+        $partner=Partner::get();
+        
     }
 }

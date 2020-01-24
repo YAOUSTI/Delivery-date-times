@@ -19,6 +19,10 @@ Route::resource('/cities', 'CityController')->only(['index', 'show', 'store', 'u
 
 Route::post('/cities/{id}/delivery_times','CityController@delivery_times');
 Route::post('/partners/{id}/delivery_times','PartnerController@attach_delivery_time');
+Route::post('/cities/{id}/exclude_dates','CityController@exclude_delivery_date');
+
+Route::get('cities/{id}/delivery-date-times/{number_of_days_to_get}','CityController@delivery_date_times');
+
 
 // i exclude create and edit methodes
 Route::resource('/delivery-times', 'DeliveryTimeController')->only('index', 'show', 'store', 'update', 'destroy');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Delivery;
 use Illuminate\Http\Request;
 
@@ -19,4 +20,6 @@ class DeliveryTimeController extends Controller
             'message' => 'delivery stored !',
         ]);
     }
+
+    
 }
